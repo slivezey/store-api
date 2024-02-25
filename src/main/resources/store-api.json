@@ -1,0 +1,332 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Store API",
+		"version": "1.0.0"
+	},
+	"paths": {
+		"/api/user/echo": {
+			"post": {
+				"operationId": "echo",
+				"summary": "Echoes the request message back in the response",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Message"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200 Ok Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Message"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "401 Unauthorized Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorMessage"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/sign-up": {
+			"post": {
+				"operationId": "sign-up",
+				"summary": "User sign-up for a new user account",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SignUpRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200 Ok Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Message"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "400 Bad Request Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Message"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/sign-in": {
+			"post": {
+				"operationId": "sign-in",
+				"summary": "User sign-in to the application",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SignInRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200 Ok Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SignInResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "401 Unauthorized Response (Bad Credentials)",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorMessage"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/token-refresh": {
+			"post": {
+				"operationId": "token-refresh",
+				"summary": "Validate refresh token and issue a new access token",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TokenRefreshRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "200 Ok Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TokenRefreshResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "401 Unauthorized Response (Invalid Token)",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorMessage"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/sign-out": {
+			"post": {
+				"operationId": "logout",
+				"summary": "Terminates the user's authenticated session",
+				"responses": {
+					"200": {
+						"description": "200 Ok Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Message"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"SignInRequest": {
+				"description": "Request payload for the sign-in operation",
+				"required": [
+					"username",
+					"password"
+				],
+				"properties": {
+					"username": {
+						"description": "The identity name of the user",
+						"type": "string"
+					},
+					"password": {
+						"description": "The password credential for the user",
+						"type": "string"
+					}
+				}
+			},
+			"SignInResponse": {
+				"description": "Response payload for the sign-in operation",
+				"required": [
+					"accessToken",
+					"type",
+					"refreshToken",
+					"username",
+					"email",
+					"roles"
+				],
+				"properties": {
+					"accessToken": {
+						"description": "The access token that represents the authenticated user session",
+						"type": "string"
+					},
+					"type": {
+						"description": "The type of the access token (typically 'Bearer')",
+						"type": "string"
+					},
+					"refreshToken": {
+						"description": "The refresh token that can be used to obtain a new access token when the original",
+						"type": "string"
+					},
+					"username": {
+						"description": "The identity name of the user",
+						"type": "string"
+					},
+					"email": {
+						"description": "The email address of the user",
+						"type": "string"
+					},
+					"roles": {
+						"description": "The authorization roles granted to this user",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"SignUpRequest": {
+				"description": "Request payload for the sign-up operation",
+				"required": [
+					"username",
+					"email",
+					"password"
+				],
+				"properties": {
+					"username": {
+						"description": "The identity name of the user",
+						"type": "string"
+					},
+					"email": {
+						"description": "The email address of the user",
+						"type": "string"
+					},
+					"password": {
+						"description": "The password credential for the user",
+						"type": "string"
+					}
+				}
+			},
+			"TokenRefreshRequest": {
+				"description": "Request payload for the token-refresh operation",
+				"required": [
+					"refreshToken"
+				],
+				"properties": {
+					"refreshToken": {
+						"description": "The refresh token that will be used to issue a new access token",
+						"type": "string"
+					}
+				}
+			},
+			"TokenRefreshResponse": {
+				"description": "Response payload for the token-refresh operation",
+				"required": [
+					"accessToken",
+					"type",
+					"refreshToken"
+				],
+				"properties": {
+					"accessToken": {
+						"description": "The access token that represents the authenticated user session",
+						"type": "string"
+					},
+					"type": {
+						"description": "The type of the access token (typically 'Bearer')",
+						"type": "string"
+					},
+					"refreshToken": {
+						"description": "The refresh token that can be used to obtain a new access token when the original",
+						"type": "string"
+					}
+				}
+			},
+			"Message": {
+				"description": "General response payload that provides details about the status of an operation",
+				"type": "object",
+				"required": [
+					"message"
+				],
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				}
+			},
+			"ErrorMessage": {
+				"description": "General response payload that provides details about the status of an operation",
+				"type": "object",
+				"required": [
+					"status",
+					"error",
+					"path",
+					"timestamp"
+				],
+				"properties": {
+					"status": {
+						"type": "int"
+					},
+					"error": {
+						"type": "string"
+					},
+					"path": {
+						"type": "string"
+					},
+					"timestamp": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}

@@ -40,5 +40,6 @@ jobs:
         key: ${{ secrets.SERVER_KEY }}
         script: |
           docker stop store-api
-          docker system prune -a -f
-          docker run -d --name store-api -p 8080:8080 --network=store-network --env-file=/root/store-api.env slivezey/store-api:latest
+          docker container rm store-api
+          docker image rm slivezey/store-api
+          sudo docker run -d --name store-api -p 8080:8080 --network=store-network --env-file=/root/store-api.env slivezey/store-api:latest

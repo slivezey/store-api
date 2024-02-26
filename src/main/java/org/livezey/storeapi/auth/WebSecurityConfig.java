@@ -4,6 +4,7 @@
 
 package org.livezey.storeapi.auth;
 
+import org.livezey.storeapi.util.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Handles the configuration of JWT web security for the application.
  */
 @Configuration
-// @EnableMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
     private static boolean CORS_DISABLE;
@@ -117,14 +117,8 @@ public class WebSecurityConfig {
      * Static initializer that determines whether CORS should be disabled.
      */
     static {
-        try {
-            String corsDisable = System.getenv( "CORS_DISABLE" );
-
-            CORS_DISABLE = (corsDisable == null) ? false : corsDisable.toLowerCase().equals( "true" );
-
-        } catch (Exception e) {
-            throw new ExceptionInInitializerError( e );
-        }
+        String corsDisable = Environment.getEnv( "CORS_DISABLE" );
+        CORS_DISABLE = (corsDisable == null) ? false : corsDisable.toLowerCase().equals( "true" );
     }
 
 }

@@ -12,7 +12,18 @@ import java.util.Map;
  */
 public class Environment {
 
-    private static Map<String,String> overrides = new HashMap<>();
+    private static final Environment defaultInstance = new Environment();
+
+    private Map<String,String> overrides = new HashMap<>();
+
+    /**
+     * Returns the default <code>Environment</code> instance.
+     * 
+     * @return Environment
+     */
+    public static Environment getDefault() {
+        return defaultInstance;
+    }
 
     /**
      * Returns the value of an environment variable.
@@ -20,7 +31,7 @@ public class Environment {
      * @param key the name of the environment variable
      * @return String
      */
-    public static String getEnv(String key) {
+    public String getEnv(String key) {
         return overrides.computeIfAbsent( key, k -> System.getenv( k ) );
     }
 
@@ -30,7 +41,7 @@ public class Environment {
      * @param key the name of the environment variable
      * @param value the value to assign
      */
-    public static void setEnv(String key, String value) {
+    public void setEnv(String key, String value) {
         overrides.put( key, value );
     }
 

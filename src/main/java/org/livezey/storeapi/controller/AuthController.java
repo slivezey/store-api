@@ -4,23 +4,23 @@
 
 package org.livezey.storeapi.controller;
 
-import org.livezey.storeapi.api.AuthApi;
 import org.livezey.storeapi.auth.JWTUtils;
 import org.livezey.storeapi.auth.RefreshTokenService;
 import org.livezey.storeapi.auth.TokenRefreshException;
 import org.livezey.storeapi.auth.UserDetailsImpl;
 import org.livezey.storeapi.jpa.RoleRepository;
 import org.livezey.storeapi.jpa.UserRepository;
-import org.livezey.storeapi.model.Message;
 import org.livezey.storeapi.model.RefreshToken;
 import org.livezey.storeapi.model.Role;
 import org.livezey.storeapi.model.RoleType;
-import org.livezey.storeapi.model.SignInRequest;
-import org.livezey.storeapi.model.SignInResponse;
-import org.livezey.storeapi.model.SignUpRequest;
-import org.livezey.storeapi.model.TokenRefreshRequest;
-import org.livezey.storeapi.model.TokenRefreshResponse;
 import org.livezey.storeapi.model.User;
+import org.livezey.storeapi.openapi.api.AuthApi;
+import org.livezey.storeapi.openapi.model.Message;
+import org.livezey.storeapi.openapi.model.SignInRequest;
+import org.livezey.storeapi.openapi.model.SignInResponse;
+import org.livezey.storeapi.openapi.model.SignUpRequest;
+import org.livezey.storeapi.openapi.model.TokenRefreshRequest;
+import org.livezey.storeapi.openapi.model.TokenRefreshResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

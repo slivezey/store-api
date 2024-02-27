@@ -117,7 +117,7 @@ public class WebSecurityConfig {
      * Static initializer that determines whether CORS should be disabled.
      */
     static {
-        String corsDisable = Environment.getEnv( "CORS_DISABLE" );
+        String corsDisable = Environment.getDefault().getEnv( "CORS_DISABLE" );
         CORS_DISABLE = (corsDisable == null) ? false : corsDisable.toLowerCase().equals( "true" );
     }
 

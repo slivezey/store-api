@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -145,8 +144,7 @@ public class UserDetailsImpl implements UserDetails {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        UserDetailsImpl user = (UserDetailsImpl) o;
-        return Objects.equals( id, user.id );
+        return ((UserDetailsImpl) o).getId() == this.id;
     }
 
 }

@@ -24,13 +24,13 @@ import java.util.UUID;
 public class RefreshTokenService {
 
     @Value("${jwt.refresh.expiration}")
-    private Long tokenDuration;
+    protected Long tokenDuration;
 
     @Autowired
-    private RefreshTokenRepository tokenRepository;
+    protected RefreshTokenRepository tokenRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    protected UserRepository userRepository;
 
     /**
      * Retrieves the specified refresh token from persistent storage.
@@ -53,9 +53,6 @@ public class RefreshTokenService {
         Optional<RefreshToken> existingToken = tokenRepository.findByUser( user );
         RefreshToken refreshToken = existingToken.orElse( new RefreshToken() );
 
-        if (refreshToken == null) {
-            refreshToken = new RefreshToken();
-        }
         refreshToken.setUser( user );
         refreshToken.setExpiryDate( Instant.now().plusMillis( tokenDuration ) );
         refreshToken.setToken( UUID.randomUUID().toString() );

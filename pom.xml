@@ -27,6 +27,7 @@
 		<jakarta.version>1.3.5</jakarta.version>
 		<servlet-api.version>4.0.1</servlet-api.version>
 		<mysql-connector.version>8.0.33</mysql-connector.version>
+		<mockito.version>4.8.1</mockito.version>
 		
 		<!-- Plugin Versions -->
 		<openapi-generator.version>6.2.1</openapi-generator.version>
@@ -106,6 +107,12 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>
@@ -126,8 +133,8 @@
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/store-api.json</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>org.livezey.storeapi.api</apiPackage>
-							<modelPackage>org.livezey.storeapi.model</modelPackage>
+							<apiPackage>org.livezey.storeapi.openapi.api</apiPackage>
+							<modelPackage>org.livezey.storeapi.openapi.model</modelPackage>
 							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 							<configOptions>
 								<interfaceOnly>true</interfaceOnly>
@@ -141,7 +148,7 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
 				<configuration>
-					<excludes></excludes>
+					<excludes>org/livezey/storeapi/openapi/**</excludes>
 				</configuration>
 				<executions>
 					<execution>
@@ -171,12 +178,12 @@
 										<limit>
 											<counter>INSTRUCTION</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.04</minimum>
+											<minimum>0.80</minimum>
 										</limit>
 										<limit>
 											<counter>BRANCH</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.00</minimum>
+											<minimum>0.80</minimum>
 										</limit>
 									</limits>
 								</rule>
